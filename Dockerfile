@@ -1,5 +1,5 @@
 FROM openjdk:8-jdk-alpine
-MAINTAINER Michal Kaczara <mkaczara@o2.pl>
+MAINTAINER Michal Kaczara <m.kaczara@o2.pl>
 
 VOLUME /tmp
 
