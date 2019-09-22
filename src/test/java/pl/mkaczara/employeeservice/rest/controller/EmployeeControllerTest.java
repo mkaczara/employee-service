@@ -1,6 +1,5 @@
 package pl.mkaczara.employeeservice.rest.controller;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
 import java.util.Collections;
@@ -13,6 +12,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import pl.mkaczara.employeeservice.rest.exception.EmployeeNotFoundException;
 import pl.mkaczara.employeeservice.rest.model.AddressRestDTO;
 import pl.mkaczara.employeeservice.rest.model.EmployeeRestDTO;
 import pl.mkaczara.employeeservice.rest.service.RestEmployeeService;
@@ -28,11 +28,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(value = EmployeeController.class)
+@WebMvcTest(EmployeeController.class)
 public class EmployeeControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @MockBean
     private RestEmployeeService employeeService;
@@ -67,6 +70,16 @@ public class EmployeeControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(content().string(toJson(employee)));
+    }
+
+    @Test
+    public void shouldReturn404WhenUnableToById() throws Exception {
+        Long employeeId = 12L;
+        when(employeeService.getById(employeeId)).thenThrow(EmployeeNotFoundException.class);
+
+        mvc.perform(get("/api/v1/employee/{id}", employeeId)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -114,9 +127,17 @@ public class EmployeeControllerTest {
                 .andExpect(content().string(toJson(employee)));
     }
 
+    @Test
+    public void shouldReturn404WhenUnableToDeleteById() throws Exception {
+        Long employeeId = 12L;
+        when(employeeService.deleteById(employeeId)).thenThrow(EmployeeNotFoundException.class);
+
+        mvc.perform(delete("/api/v1/employee/{id}", employeeId)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isNotFound());
+    }
+
     private String toJson(Object object) throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         return objectMapper.writeValueAsString(object);
     }
 }
