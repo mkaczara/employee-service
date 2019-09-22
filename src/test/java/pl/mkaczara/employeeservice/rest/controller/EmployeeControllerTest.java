@@ -2,7 +2,7 @@ package pl.mkaczara.employeeservice.rest.controller;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Arrays;
+import com.google.common.collect.ImmutableList;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(EmployeeController.class)
+@WebMvcTest(value = EmployeeController.class)
 public class EmployeeControllerTest {
 
     @Autowired
@@ -39,7 +39,7 @@ public class EmployeeControllerTest {
     public void shouldGetAll() throws Exception {
         EmployeeRestDTO employee1 = new EmployeeRestDTO(12L, "a", "b", 25, 0);
         EmployeeRestDTO employee2 = new EmployeeRestDTO(13L, "a", "b", 30, 0);
-        List<EmployeeRestDTO> employees = Arrays.asList(employee1, employee2);
+        List<EmployeeRestDTO> employees = ImmutableList.of(employee1, employee2);
         when(employeeService.getAll()).thenReturn(employees);
 
         mvc.perform(get("/api/v1/employee")

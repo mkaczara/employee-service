@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import pl.mkaczara.employeeservice.rest.exception.EmployeeNotFoundException;
 import pl.mkaczara.employeeservice.rest.model.EmployeeRestDTO;
 import pl.mkaczara.employeeservice.rest.service.RestEmployeeService;
 
@@ -31,7 +32,7 @@ public class EmployeeController {
     }
 
     @GetMapping(path = "/employee/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public EmployeeRestDTO get(@PathVariable("id") Long id) {
+    public EmployeeRestDTO get(@PathVariable("id") Long id) throws EmployeeNotFoundException {
         return employeeService.getById(id);
     }
 
@@ -46,7 +47,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping(path = "/employee/{id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public EmployeeRestDTO delete(@PathVariable("id") Long id) {
+    public EmployeeRestDTO delete(@PathVariable("id") Long id) throws EmployeeNotFoundException {
         return employeeService.deleteById(id);
     }
 }
