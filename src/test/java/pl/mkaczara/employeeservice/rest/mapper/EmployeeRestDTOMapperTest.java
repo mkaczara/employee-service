@@ -33,7 +33,7 @@ public class EmployeeRestDTOMapperTest {
     }
 
     @Test
-    public void shouldMapToEmployeeRestDTO() {
+    public void shouldMapToEmployeeRestDTO() throws Exception {
         Address employeeToMapAddress = new Address(1L, "street", "city", "postcode", "state");
         Employee employeeToMap = new Employee(12L, "a", "b", 25, Gender.FEMALE);
         employeeToMap.addAddress(employeeToMapAddress);
@@ -48,7 +48,7 @@ public class EmployeeRestDTOMapperTest {
     }
 
     @Test
-    public void shouldMapToEmployee() {
+    public void shouldMapToEmployee() throws Exception {
         AddressRestDTO employeeToMapAddress = new AddressRestDTO(1L, "street", "city", "postcode", "state");
         EmployeeRestDTO employeeToMap = new EmployeeRestDTO(12L, "a", "b", 25, 1, Collections.singletonList(employeeToMapAddress));
         Address expectedAddress = new Address(1L, "street", "city", "postcode", "state");

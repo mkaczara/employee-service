@@ -1,4 +1,4 @@
-package pl.mkaczara.employeeservice.logic.service;
+package pl.mkaczara.employeeservice.logic.crud.service;
 
 import java.util.Collection;
 import java.util.Optional;

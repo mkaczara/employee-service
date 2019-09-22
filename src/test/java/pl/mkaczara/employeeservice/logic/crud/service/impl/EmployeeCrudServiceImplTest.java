@@ -1,4 +1,4 @@
-package pl.mkaczara.employeeservice.logic.service.impl;
+package pl.mkaczara.employeeservice.logic.crud.service.impl;
 
 import java.util.Optional;
 import org.junit.Before;

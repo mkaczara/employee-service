@@ -24,7 +24,7 @@ public class GenderMapperTest {
 
     @Test
     @Parameters(method = "paramsToTestMapToEncoded")
-    public void shouldMapToEncoded(Gender input, Integer expected) {
+    public void shouldMapToEncoded(Gender input, Integer expected) throws Exception {
         Integer result = genderMapper.map(input);
 
         assertEquals(expected, result);
@@ -32,14 +32,14 @@ public class GenderMapperTest {
 
     @Test
     @Parameters(method = "paramsToTestMapToGender")
-    public void shouldMapToGender(Integer input, Gender expected) {
+    public void shouldMapToGender(Integer input, Gender expected) throws Exception {
         Gender result = genderMapper.map(input);
 
         assertEquals(expected, result);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowWhenmapToGenderAndUnsupportedEncodedValue() {
+    public void shouldThrowWhenMapToGenderAndUnsupportedEncodedValue() throws Exception {
         genderMapper.map(56);
     }
 

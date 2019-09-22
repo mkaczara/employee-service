@@ -36,7 +36,7 @@ public class AddressRestDTOMapperTest {
 
         Collection<AddressRestDTO> result = mapper.map(addressesToMap);
 
-        assertEquals(result, expected);
+        assertEquals(expected, result);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class AddressRestDTOMapperTest {
 
         Collection<Address> result = mapper.map(addressesToMap);
 
-        assertEquals(result, expected);
+        assertEquals(expected, result);
         assertThat(result).usingFieldByFieldElementComparator().containsExactlyElementsOf(expected);
     }
 

@@ -87,6 +87,12 @@ with id = 11
 curl -i -X DELETE \
  'http://localhost/api/v1/employee/11'
 ```
+#### Get average age
+using aggregate API 
+```
+curl -i -X GET \
+ 'http://localhost/api/v1/employee/aggregate/avg/age'
+```
 #### Get 404 error code
 to check how handler works (assuming employee with id = 1024 doesn't exist)
 ```

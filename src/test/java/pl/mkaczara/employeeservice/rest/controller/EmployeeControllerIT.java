@@ -31,6 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(EmployeeController.class)
 public class EmployeeControllerIT {
 
+    private static final String ENDPOINT_URL = "/api/v1/employee";
+
     @Autowired
     private MockMvc mvc;
 
@@ -51,7 +53,7 @@ public class EmployeeControllerIT {
         List<EmployeeRestDTO> employees = ImmutableList.of(employee1, employee2);
         when(employeeService.getAll()).thenReturn(employees);
 
-        mvc.perform(get("/api/v1/employee")
+        mvc.perform(get(ENDPOINT_URL)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(employees.size())))
@@ -66,7 +68,7 @@ public class EmployeeControllerIT {
         ));
         when(employeeService.getById(employeeId)).thenReturn(employee);
 
-        mvc.perform(get("/api/v1/employee/{id}", employeeId)
+        mvc.perform(get(ENDPOINT_URL + "/{id}", employeeId)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(content().string(toJson(employee)));
@@ -77,7 +79,7 @@ public class EmployeeControllerIT {
         Long employeeId = 12L;
         when(employeeService.getById(employeeId)).thenThrow(EmployeeNotFoundException.class);
 
-        mvc.perform(get("/api/v1/employee/{id}", employeeId)
+        mvc.perform(get(ENDPOINT_URL + "/{id}", employeeId)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound());
     }
@@ -92,7 +94,7 @@ public class EmployeeControllerIT {
         ));
         when(employeeService.add(employeeToAdd)).thenReturn(addedEmployee);
 
-        mvc.perform(post("/api/v1/employee")
+        mvc.perform(post(ENDPOINT_URL)
                 .content(toJson(employeeToAdd))
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -106,7 +108,7 @@ public class EmployeeControllerIT {
         ));
         when(employeeService.update(employee)).thenReturn(employee);
 
-        mvc.perform(put("/api/v1/employee")
+        mvc.perform(put(ENDPOINT_URL)
                 .content(toJson(employee))
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
@@ -121,7 +123,7 @@ public class EmployeeControllerIT {
         ));
         when(employeeService.deleteById(employeeId)).thenReturn(employee);
 
-        mvc.perform(delete("/api/v1/employee/{id}", employeeId)
+        mvc.perform(delete(ENDPOINT_URL + "/{id}", employeeId)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(content().string(toJson(employee)));
@@ -132,7 +134,7 @@ public class EmployeeControllerIT {
         Long employeeId = 12L;
         when(employeeService.deleteById(employeeId)).thenThrow(EmployeeNotFoundException.class);
 
-        mvc.perform(delete("/api/v1/employee/{id}", employeeId)
+        mvc.perform(delete(ENDPOINT_URL + "/{id}", employeeId)
                 .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isNotFound());
     }

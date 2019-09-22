@@ -5,10 +5,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.mkaczara.employeeservice.logic.service.EmployeeCrudService;
+import pl.mkaczara.employeeservice.logic.aggregate.service.EmployeeAggregateService;
+import pl.mkaczara.employeeservice.logic.crud.service.EmployeeCrudService;
 import pl.mkaczara.employeeservice.repository.entity.Employee;
 import pl.mkaczara.employeeservice.rest.exception.EmployeeNotFoundException;
 import pl.mkaczara.employeeservice.rest.mapper.EmployeeRestDTOMapper;
+import pl.mkaczara.employeeservice.rest.model.AggregateValue;
 import pl.mkaczara.employeeservice.rest.model.EmployeeRestDTO;
 import pl.mkaczara.employeeservice.rest.service.RestEmployeeService;
 
@@ -16,11 +18,14 @@ import pl.mkaczara.employeeservice.rest.service.RestEmployeeService;
 public class RestEmployeeServiceImpl implements RestEmployeeService {
 
     private EmployeeCrudService employeeCrudService;
+    private EmployeeAggregateService employeeAggregateService;
     private EmployeeRestDTOMapper restDTOMapper;
 
     @Autowired
-    public RestEmployeeServiceImpl(EmployeeCrudService employeeCrudService, EmployeeRestDTOMapper restDTOMapper) {
+    public RestEmployeeServiceImpl(EmployeeCrudService employeeCrudService, EmployeeAggregateService employeeAggregateService,
+            EmployeeRestDTOMapper restDTOMapper) {
         this.employeeCrudService = employeeCrudService;
+        this.employeeAggregateService = employeeAggregateService;
         this.restDTOMapper = restDTOMapper;
     }
 
@@ -59,5 +64,11 @@ public class RestEmployeeServiceImpl implements RestEmployeeService {
     public EmployeeRestDTO deleteById(Long id) throws EmployeeNotFoundException {
         Optional<Employee> employee = employeeCrudService.deleteById(id);
         return employee.map(restDTOMapper::map).orElseThrow(() -> new EmployeeNotFoundException("Unable to delete employee with id: " + id));
+    }
+
+    @Override
+    public AggregateValue calculateAverageAge() {
+        Double avgAge = employeeAggregateService.calculateAverageAge();
+        return new AggregateValue(avgAge);
     }
 }

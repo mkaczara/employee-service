@@ -1,4 +1,4 @@
-package pl.mkaczara.employeeservice.logic.service.impl;
+package pl.mkaczara.employeeservice.logic.crud.service.impl;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -7,7 +7,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.mkaczara.employeeservice.logic.service.EmployeeCrudService;
+import pl.mkaczara.employeeservice.logic.crud.service.EmployeeCrudService;
 import pl.mkaczara.employeeservice.repository.entity.Employee;
 import pl.mkaczara.employeeservice.repository.impl.EmployeeRepository;
 

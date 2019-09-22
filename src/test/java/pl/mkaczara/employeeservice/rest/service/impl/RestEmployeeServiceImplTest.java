@@ -9,10 +9,12 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import pl.mkaczara.employeeservice.logic.service.EmployeeCrudService;
+import pl.mkaczara.employeeservice.logic.aggregate.service.EmployeeAggregateService;
+import pl.mkaczara.employeeservice.logic.crud.service.EmployeeCrudService;
 import pl.mkaczara.employeeservice.repository.entity.Employee;
 import pl.mkaczara.employeeservice.rest.exception.EmployeeNotFoundException;
 import pl.mkaczara.employeeservice.rest.mapper.EmployeeRestDTOMapper;
+import pl.mkaczara.employeeservice.rest.model.AggregateValue;
 import pl.mkaczara.employeeservice.rest.model.EmployeeRestDTO;
 
 import static org.junit.Assert.assertEquals;
@@ -27,6 +29,9 @@ public class RestEmployeeServiceImplTest {
 
     @Mock
     private EmployeeCrudService crudService;
+
+    @Mock
+    private EmployeeAggregateService aggregateService;
 
     @Mock
     private EmployeeRestDTOMapper restDTOMapper;
@@ -129,5 +134,15 @@ public class RestEmployeeServiceImplTest {
         when(crudService.deleteById(SAMPLE_EMPLOYEE_ID)).thenReturn(Optional.empty());
 
         restEmployeeService.deleteById(SAMPLE_EMPLOYEE_ID);
+    }
+
+    @Test
+    public void shouldCalculateAverageAge() throws Exception {
+        AggregateValue expected = new AggregateValue(49.5);
+        when(aggregateService.calculateAverageAge()).thenReturn(49.5);
+
+        AggregateValue result = restEmployeeService.calculateAverageAge();
+
+        assertEquals(expected, result);
     }
 }

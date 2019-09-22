@@ -2,6 +2,7 @@ package pl.mkaczara.employeeservice.rest.service;
 
 import java.util.Collection;
 import pl.mkaczara.employeeservice.rest.exception.EmployeeNotFoundException;
+import pl.mkaczara.employeeservice.rest.model.AggregateValue;
 import pl.mkaczara.employeeservice.rest.model.EmployeeRestDTO;
 
 public interface RestEmployeeService {
@@ -15,4 +16,6 @@ public interface RestEmployeeService {
     EmployeeRestDTO update(EmployeeRestDTO employee);
 
     EmployeeRestDTO deleteById(Long id) throws EmployeeNotFoundException;
+
+    AggregateValue calculateAverageAge();
 }
