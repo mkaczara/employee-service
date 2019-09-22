@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(EmployeeController.class)
-public class EmployeeControllerTest {
+public class EmployeeControllerIT {
 
     @Autowired
     private MockMvc mvc;
