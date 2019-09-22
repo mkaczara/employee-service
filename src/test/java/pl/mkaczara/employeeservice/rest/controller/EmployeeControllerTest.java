@@ -3,6 +3,7 @@ package pl.mkaczara.employeeservice.rest.controller;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import pl.mkaczara.employeeservice.rest.model.AddressRestDTO;
 import pl.mkaczara.employeeservice.rest.model.EmployeeRestDTO;
 import pl.mkaczara.employeeservice.rest.service.RestEmployeeService;
 
@@ -37,8 +39,12 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldGetAll() throws Exception {
-        EmployeeRestDTO employee1 = new EmployeeRestDTO(12L, "a", "b", 25, 0);
-        EmployeeRestDTO employee2 = new EmployeeRestDTO(13L, "a", "b", 30, 0);
+        EmployeeRestDTO employee1 = new EmployeeRestDTO(12L, "a", "b", 25, 0, Collections.singletonList(
+                new AddressRestDTO(1L, "street1", "city1", "postCode1", "state1")
+        ));
+        EmployeeRestDTO employee2 = new EmployeeRestDTO(13L, "a", "b", 30, 0, Collections.singletonList(
+                new AddressRestDTO(2L, "street2", "city2", "postCode2", "state2")
+        ));
         List<EmployeeRestDTO> employees = ImmutableList.of(employee1, employee2);
         when(employeeService.getAll()).thenReturn(employees);
 
@@ -52,7 +58,9 @@ public class EmployeeControllerTest {
     @Test
     public void shouldGetById() throws Exception {
         Long employeeId = 12L;
-        EmployeeRestDTO employee = new EmployeeRestDTO(employeeId, "a", "b", 30, 0);
+        EmployeeRestDTO employee = new EmployeeRestDTO(employeeId, "a", "b", 30, 0, Collections.singletonList(
+                new AddressRestDTO(1L, "street1", "city1", "postCode1", "state1")
+        ));
         when(employeeService.getById(employeeId)).thenReturn(employee);
 
         mvc.perform(get("/api/v1/employee/{id}", employeeId)
@@ -63,8 +71,12 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldAdd() throws Exception {
-        EmployeeRestDTO employeeToAdd = new EmployeeRestDTO(null, "a", "b", 25, 0);
-        EmployeeRestDTO addedEmployee = new EmployeeRestDTO(15L, "a", "b", 25, 0);
+        EmployeeRestDTO employeeToAdd = new EmployeeRestDTO(null, "a", "b", 25, 0, Collections.singletonList(
+                new AddressRestDTO(1L, "street1", "city1", "postCode1", "state1")
+        ));
+        EmployeeRestDTO addedEmployee = new EmployeeRestDTO(15L, "a", "b", 25, 0, Collections.singletonList(
+                new AddressRestDTO(1L, "street1", "city1", "postCode1", "state1")
+        ));
         when(employeeService.add(employeeToAdd)).thenReturn(addedEmployee);
 
         mvc.perform(post("/api/v1/employee")
@@ -76,7 +88,9 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldUpdate() throws Exception {
-        EmployeeRestDTO employee = new EmployeeRestDTO(5L, "a", "b", 30, 0);
+        EmployeeRestDTO employee = new EmployeeRestDTO(5L, "a", "b", 30, 0, Collections.singletonList(
+                new AddressRestDTO(1L, "street1", "city1", "postCode1", "state1")
+        ));
         when(employeeService.update(employee)).thenReturn(employee);
 
         mvc.perform(put("/api/v1/employee")
@@ -89,7 +103,9 @@ public class EmployeeControllerTest {
     @Test
     public void shouldDeleteById() throws Exception {
         Long employeeId = 5L;
-        EmployeeRestDTO employee = new EmployeeRestDTO(employeeId, "a", "b", 30, 0);
+        EmployeeRestDTO employee = new EmployeeRestDTO(employeeId, "a", "b", 30, 0, Collections.singletonList(
+                new AddressRestDTO(1L, "street1", "city1", "postCode1", "state1")
+        ));
         when(employeeService.deleteById(employeeId)).thenReturn(employee);
 
         mvc.perform(delete("/api/v1/employee/{id}", employeeId)

@@ -9,10 +9,12 @@ import pl.mkaczara.employeeservice.rest.model.EmployeeRestDTO;
 public class EmployeeRestDTOMapper {
 
     private GenderMapper genderMapper;
+    private AddressRestDTOMapper addressRestDTOMapper;
 
     @Autowired
-    public EmployeeRestDTOMapper(GenderMapper genderMapper) {
+    public EmployeeRestDTOMapper(GenderMapper genderMapper, AddressRestDTOMapper addressRestDTOMapper) {
         this.genderMapper = genderMapper;
+        this.addressRestDTOMapper = addressRestDTOMapper;
     }
 
     public EmployeeRestDTO map(Employee employee) {
@@ -21,17 +23,20 @@ public class EmployeeRestDTOMapper {
                 employee.getFirstName(),
                 employee.getLastName(),
                 employee.getAge(),
-                genderMapper.map(employee.getGender())
+                genderMapper.map(employee.getGender()),
+                addressRestDTOMapper.map(employee.getAddresses())
         );
     }
 
     public Employee map(EmployeeRestDTO employee) {
-        return new Employee(
+        Employee mappedEmployee = new Employee(
                 employee.getId(),
                 employee.getFirstName(),
                 employee.getLastName(),
                 employee.getAge(),
                 genderMapper.map(employee.getGender())
         );
+        addressRestDTOMapper.map(employee.getAddresses()).forEach(mappedEmployee::addAddress);
+        return mappedEmployee;
     }
 }

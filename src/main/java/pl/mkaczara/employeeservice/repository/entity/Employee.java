@@ -1,12 +1,18 @@
 package pl.mkaczara.employeeservice.repository.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -14,7 +20,8 @@ import javax.persistence.Table;
 public class Employee {
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name= "EMPLOYEE_SEQUENCE", sequenceName = "EMPLOYEE_ID_SEQ", initialValue=1, allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMPLOYEE_SEQUENCE")
     private Long id;
 
     @Column(name = "first_name")
@@ -29,6 +36,9 @@ public class Employee {
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses = new ArrayList<>();
 
     public Employee() {
     }
@@ -81,6 +91,20 @@ public class Employee {
         this.gender = gender;
     }
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void addAddress(Address address) {
+        addresses.add(address);
+        address.setEmployee(this);
+    }
+
+    public void removeAddress(Address address) {
+        addresses.remove(address);
+        address.setEmployee(null);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -106,6 +130,7 @@ public class Employee {
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", gender=" + gender +
+                ", addresses=" + addresses +
                 '}';
     }
 }

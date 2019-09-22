@@ -26,3 +26,8 @@ In both cases the response should look as follows:
   "status": "UP"
 }
 ```
+
+### Sample data sources
+Employees' first & last names: http://random-name-generator.info/random
+
+Addresses: https://www.randomlists.com/california-address
