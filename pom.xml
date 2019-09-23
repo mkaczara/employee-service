@@ -10,7 +10,7 @@
   </parent>
   <groupId>pl.mkaczara</groupId>
   <artifactId>employee-service</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1-RELEASE</version>
   <name>employee-service</name>
   <description>Sample employee service</description>
 

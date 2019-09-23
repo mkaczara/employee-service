@@ -18,7 +18,7 @@ mvn clean install
 ```
 To run service after building the project use:
 ```
-docker run -p 8080:8080 -t mkaczara/employee-service:0.0.1-SNAPSHOT
+docker run -p 8080:8080 -t mkaczara/employee-service:0.0.1-RELEASE
 ```
 
 ### Verify if service works
