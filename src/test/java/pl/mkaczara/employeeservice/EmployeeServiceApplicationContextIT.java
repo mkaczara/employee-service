@@ -10,6 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class EmployeeServiceApplicationContextIT {
 
     @Test
-    public void contextLoads() {
+    public void shouldLoadContext() {
     }
 }

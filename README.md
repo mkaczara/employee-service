@@ -1,5 +1,15 @@
 # employee-service
+Sample microservice for storing employees
 
+### Tech stack
+- Java 8, Maven, Spring Boot 2.x
+- Mockito, JUnit, JUnitParams, AssertJ
+- H2 database
+- Docker
+#### Tested with
+- openjdk version 1.8.0_222
+- Docker version 19.03.2 
+- Ubuntu 18.04.1
 
 ### Build and run
 To build project use:
@@ -98,6 +108,16 @@ to check how handler works (assuming employee with id = 1024 doesn't exist)
 ```
 curl -i -X GET \
  'http://localhost/api/v1/employee/1024'
+```
+
+### Deep dive into database
+Open H2 console:
+```
+http://localhost:8080/h2-console/
+```
+Database name, user and password can be found in:
+```
+/src/main/resources/application.properties
 ```
 
 ### Sample data sources
